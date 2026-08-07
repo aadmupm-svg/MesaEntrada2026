@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  usuario   String   @unique
+  pass      String
+  notas     Nota[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Nota {
+  id        Int      @id @default(autoincrement())
+  tipo      String
+  numero    String
+  anio      Int
+  fojas     String   @default("")
+  letra     String   @default("")
+  fecha     String
+  hora      String
+  firmante  String
+  extracto  String
+  para      String
+  usuario   String
+  usuarioId Int?
+  usuarioRel Usuario? @relation(fields: [usuarioId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([numero, anio])
+}
