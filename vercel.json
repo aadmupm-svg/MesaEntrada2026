@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm --filter web build && pnpm --filter api build",
+  "outputDirectory": "apps/web/dist",
+  "functions": {
+    "apps/api/dist/vercel.js": {
+      "runtime": "nodejs22.x"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/apps/api/dist/vercel" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
