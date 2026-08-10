@@ -116,7 +116,13 @@ export function NotaForm({
         extracto: "",
       });
     }
-  }, [nota, proximoNumero, hoy, horaActual]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [nota, hoy, horaActual]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!nota && valores.numero !== proximoNumero) {
+      setValue("numero", proximoNumero);
+    }
+  }, [proximoNumero]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = (values: FormValues) => {
     onGuardar({

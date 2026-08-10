@@ -205,14 +205,43 @@ export function Home() {
   };
 
   const guardarMutation = useMutation({
-    mutationFn: (payload: NotaPayload) =>
-      notaEdicion ? updateNota(notaEdicion.id, payload) : createNota(payload),
-    onSuccess: (notaGuardada) => {
+    mutationFn: async (payload: NotaPayload) => {
+      let numeroAjustado: string | undefined;
+      let ultimoError: unknown;
+
+      for (let intento = 0; intento < 3; intento++) {
+        try {
+          const notaGuardada = notaEdicion
+            ? await updateNota(notaEdicion.id, payload)
+            : await createNota(payload);
+          return { nota: notaGuardada, numeroAjustado };
+        } catch (err) {
+          const status = (err as { response?: { status?: number } })?.response?.status;
+          if (status === 409 && !notaEdicion) {
+            const nuevoNumero = await getProximoNumero();
+            numeroAjustado = nuevoNumero;
+            payload = { ...payload, numero: nuevoNumero };
+            continue;
+          }
+          ultimoError = err;
+          break;
+        }
+      }
+
+      throw ultimoError ?? new Error("No se pudo guardar la nota");
+    },
+    onSuccess: ({ nota: notaGuardada, numeroAjustado }) => {
       actualizarCache(notaGuardada);
       invalidarNotas();
       setNotaEdicion(null);
       setFormActivo(false);
-      toastOk(notaEdicion ? "Se ha actualizado con éxito !" : "Se ha guardado con éxito !");
+      if (numeroAjustado) {
+        toastOk(
+          `El número ya estaba en uso; la nota se guardó con el número ${numeroAjustado}.`
+        );
+      } else {
+        toastOk(notaEdicion ? "Se ha actualizado con éxito !" : "Se ha guardado con éxito !");
+      }
     },
     onError: (err) => {
       const msg = err as { response?: { data?: { message?: string } } };
@@ -253,6 +282,7 @@ export function Home() {
     setNotaEdicion(null);
     setFormActivo(true);
     await refetchFecha();
+    queryClient.refetchQueries({ queryKey: ["proximo-numero"] });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
