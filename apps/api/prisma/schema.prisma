@@ -11,6 +11,7 @@ model Usuario {
   id        Int      @id @default(autoincrement())
   usuario   String   @unique
   pass      String
+  admin     Boolean  @default(false)
   notas     Nota[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -30,7 +31,7 @@ model Nota {
   para      String
   usuario   String
   usuarioId Int?
-  usuarioRel Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioRel Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

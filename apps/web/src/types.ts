@@ -20,3 +20,23 @@ export type NotaPayload = Omit<
   Nota,
   "id" | "anio" | "usuario" | "usuarioId" | "createdAt" | "updatedAt"
 >;
+
+export interface Usuario {
+  id: number;
+  usuario: string;
+  admin: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UsuarioPayload {
+  usuario: string;
+  pass: string;
+  admin: boolean;
+}
+
+export interface UsuarioEdit {
+  usuario?: string;
+  pass?: string;
+  admin?: boolean;
+}

@@ -47,8 +47,8 @@ export function Login() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: ({ usuario, pass }: LoginForm) => login(usuario, pass),
-    onSuccess: ({ token, usuario }) => {
-      guardarSesion(token, usuario);
+    onSuccess: ({ token, usuario, admin }) => {
+      guardarSesion(token, usuario, admin);
       navigate("/home");
     },
     onError: (err) => {

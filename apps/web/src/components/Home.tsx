@@ -19,8 +19,10 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PrintIcon from "@mui/icons-material/Print";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useNavigate } from "react-router-dom";
 import { getNotas, getProximoNumero, createNota, updateNota, deleteNota, getFechaAutoritativa } from "../api/notas";
 import type { Nota, NotaPayload } from "../types";
 import useAuth from "../auth/useAuth";
@@ -77,8 +79,9 @@ const toastError = (mensaje?: string) =>
   });
 
 export function Home() {
-  const { user, logout } = useAuth();
+  const { user, isAdmin, logout } = useAuth();
   const { modo, alternarModo } = useThemeMode();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [notaEdicion, setNotaEdicion] = useState<Nota | null>(null);
@@ -288,6 +291,13 @@ export function Home() {
             <Typography variant="body2" color="text.secondary">
               {user}
             </Typography>
+            {isAdmin && (
+              <Tooltip title="Administrar Usuarios">
+                <IconButton color="primary" onClick={() => navigate("/usuarios")}>
+                  <ManageAccountsIcon />
+                </IconButton>
+              </Tooltip>
+            )}
             <Tooltip title={modo === "oscuro" ? "Modo claro" : "Modo oscuro"}>
               <IconButton color="primary" onClick={alternarModo}>
                 {modo === "oscuro" ? <Brightness7Icon /> : <Brightness4Icon />}
