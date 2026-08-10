@@ -1,14 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter web build && pnpm --filter api build",
+  "buildCommand": "pnpm --filter web build",
   "outputDirectory": "apps/web/dist",
   "functions": {
-    "apps/api/dist/vercel.js": {
+    "api/vercel.ts": {
       "runtime": "@vercel/node@5.9.7"
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/apps/api/dist/vercel" },
+    { "source": "/api/(.*)", "destination": "/api/vercel" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
