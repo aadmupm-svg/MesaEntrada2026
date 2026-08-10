@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import Swal from "sweetalert2";
+import { confirmarEliminar, toastError, toastOk } from "../lib/swal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -49,29 +49,6 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-const toastOk = (mensaje: string) =>
-  Swal.fire({
-    icon: "success",
-    iconColor: "#377D71",
-    title: "Mesa de Entrada",
-    text: mensaje,
-    background: "#CDF0EA",
-    timer: 4000,
-    timerProgressBar: true,
-    showConfirmButton: false,
-  });
-
-const toastError = (mensaje?: string) =>
-  Swal.fire({
-    icon: "error",
-    title: "Mesa de Entrada",
-    text: mensaje ?? "Se ha producido un error, vuelva a intentarlo por favor.",
-    background: "#FFD1D1",
-    timer: 4000,
-    timerProgressBar: true,
-    showConfirmButton: false,
-  });
 
 export function Usuarios() {
   const navigate = useNavigate();
@@ -132,15 +109,7 @@ export function Usuarios() {
   };
 
   const handleEliminar = (u: Usuario) => {
-    Swal.fire({
-      title: "¿Está seguro que desea eliminar?",
-      text: `Se eliminará el usuario "${u.usuario}"`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-      confirmButtonColor: "#d32f2f",
-    }).then((result) => {
+    confirmarEliminar(`Se eliminará el usuario "${u.usuario}"`).then((result) => {
       if (result.isConfirmed) {
         borrar(u.id);
       }

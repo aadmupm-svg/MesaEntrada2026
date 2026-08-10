@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Swal from "sweetalert2";
+import { confirmarEliminar, toastError, toastOk } from "../lib/swal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -54,29 +54,6 @@ const filtrosVacios: Filtros = {
   firmante: "",
   extracto: "",
 };
-
-const toastOk = (mensaje: string) =>
-  Swal.fire({
-    icon: "success",
-    iconColor: "#377D71",
-    title: "Mesa de Entrada",
-    text: mensaje,
-    background: "#CDF0EA",
-    timer: 4000,
-    timerProgressBar: true,
-    showConfirmButton: false,
-  });
-
-const toastError = (mensaje?: string) =>
-  Swal.fire({
-    icon: "error",
-    title: "Mesa de Entrada",
-    text: mensaje ?? "Se ha producido un error, vuelva a intentarlo por favor.",
-    background: "#FFD1D1",
-    timer: 4000,
-    timerProgressBar: true,
-    showConfirmButton: false,
-  });
 
 export function Home() {
   const { user, isAdmin, logout } = useAuth();
@@ -260,12 +237,7 @@ export function Home() {
   });
 
   const handleEliminar = (nota: Nota) => {
-    Swal.fire({
-      title: "¿Está seguro que desea eliminar?",
-      showDenyButton: true,
-      confirmButtonText: "Eliminar",
-      denyButtonText: "Cancelar",
-    }).then(async (result) => {
+    confirmarEliminar("Esta acción no se puede deshacer.").then(async (result) => {
       if (result.isConfirmed) {
         eliminarMutation.mutate(nota.id);
       } else if (result.isDenied) {
