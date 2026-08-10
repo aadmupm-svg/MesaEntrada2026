@@ -24,7 +24,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { getNotas, getProximoNumero, createNota, updateNota, deleteNota, getFechaAutoritativa } from "../api/notas";
 import type { Nota, NotaPayload } from "../types";
 import useAuth from "../auth/useAuth";
-import { notificarCambio, socket } from "../socket";
+import { supabase } from "../lib/supabase";
 import { destinos, tipos } from "../constants";
 import { NotaForm } from "./NotaForm";
 import { NotaTable } from "./NotaTable";
@@ -115,13 +115,21 @@ export function Home() {
   }, []);
 
   useEffect(() => {
+    const sb = supabase;
+    if (!sb) return;
+
     const refetch = () => {
       queryClient.invalidateQueries({ queryKey: ["notas"], refetchType: "all" });
       queryClient.invalidateQueries({ queryKey: ["proximo-numero"], refetchType: "all" });
     };
-    socket.on("notas:changed", refetch);
+
+    const channel = sb
+      .channel("cambios-notas")
+      .on("postgres_changes", { event: "*", schema: "public", table: "Nota" }, refetch)
+      .subscribe();
+
     return () => {
-      socket.off("notas:changed", refetch);
+      sb.removeChannel(channel);
     };
   }, [queryClient]);
 
@@ -201,7 +209,6 @@ export function Home() {
       invalidarNotas();
       setNotaEdicion(null);
       setFormActivo(false);
-      notificarCambio();
       toastOk(notaEdicion ? "Se ha actualizado con éxito !" : "Se ha guardado con éxito !");
     },
     onError: (err) => {
@@ -215,7 +222,6 @@ export function Home() {
     onSuccess: (_data, id) => {
       quitarDeCache(id);
       invalidarNotas();
-      notificarCambio();
       toastOk("Se ha eliminado con éxito !");
     },
     onError: () => toastError(),
