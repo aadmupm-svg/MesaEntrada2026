@@ -19,5 +19,8 @@
       "esbuild",
       "prisma"
     ]
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3"
   }
 }
