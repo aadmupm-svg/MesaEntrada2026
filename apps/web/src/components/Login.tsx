@@ -195,7 +195,7 @@ export function Login() {
             component="p"
             sx={{ cursor: "pointer" }}
           >
-            © {new Date().getFullYear()} Mesa de Entrada · Sistema de registro de notas
+            © 2023 Informática · Sistema de registro de notas
           </Typography>
         </Tooltip>
       </Paper>
