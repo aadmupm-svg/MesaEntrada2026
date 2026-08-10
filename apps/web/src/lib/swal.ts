@@ -33,7 +33,8 @@ export const toastOk = (mensaje: string) => {
     background: oscuro ? "#14322c" : "#CDF0EA",
     timer: 4000,
     timerProgressBar: true,
-    showConfirmButton: false,
+    showConfirmButton: true,
+    confirmButtonText: "Aceptar",
   });
 };
 
@@ -49,7 +50,8 @@ export const toastError = (mensaje?: string) => {
     background: oscuro ? "#3d2323" : "#FFD1D1",
     timer: 4000,
     timerProgressBar: true,
-    showConfirmButton: false,
+    showConfirmButton: true,
+    confirmButtonText: "Aceptar",
   });
 };
 
@@ -65,7 +67,8 @@ export const toastInfo = (mensaje: string) => {
     background: oscuro ? "#1c2938" : "#D6E4F0",
     timer: 4000,
     timerProgressBar: true,
-    showConfirmButton: false,
+    showConfirmButton: true,
+    confirmButtonText: "Aceptar",
   });
 };
 

@@ -74,12 +74,12 @@ export function NotaForm({
     defaultValues: {
       tipo: "Entrada",
       numero: proximoNumero,
-      fojas: "",
+      fojas: "1",
       letra: "",
       fecha: hoy,
       horas: horaActual,
       firmante: "",
-      destino: "",
+      destino: "Intendencia",
       extracto: "",
     },
   });
@@ -107,12 +107,12 @@ export function NotaForm({
       reset({
         tipo: "Entrada",
         numero: proximoNumero,
-        fojas: "",
+        fojas: "1",
         letra: "",
         fecha: hoy,
         horas: horaActual,
         firmante: "",
-        destino: "",
+        destino: "Intendencia",
         extracto: "",
       });
     }
