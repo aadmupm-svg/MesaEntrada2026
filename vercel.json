@@ -4,7 +4,7 @@
   "outputDirectory": "apps/web/dist",
   "functions": {
     "apps/api/dist/vercel.js": {
-      "runtime": "@vercel/node@4.x"
+      "runtime": "@vercel/node@5.9.7"
     }
   },
   "rewrites": [
