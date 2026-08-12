@@ -23,7 +23,6 @@ model Nota {
   numero    String
   anio      Int
   fojas     String   @default("")
-  letra     String   @default("")
   fecha     String
   hora      String
   firmante  String

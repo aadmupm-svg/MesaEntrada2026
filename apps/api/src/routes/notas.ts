@@ -14,7 +14,6 @@ const notaSchema = z.object({
     .regex(/^\d+$/, "El número debe ser numérico")
     .max(10),
   fojas: z.string().trim().max(20).default(""),
-  letra: z.string().trim().max(10).default(""),
   fecha: z.string().trim().min(1, "La fecha es obligatoria").max(20),
   hora: z.string().trim().min(1, "La hora es obligatoria").max(10),
   firmante: z.string().trim().min(1, "El firmante es obligatorio").max(200),
