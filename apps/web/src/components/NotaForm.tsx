@@ -237,7 +237,19 @@ fojas: "1",
         <Controller
           name="destino"
           control={control}
-          render={({ field }) => (
+          render={({ field }) =>
+            valores.tipo === "Salida" ? (
+              <TextField
+                label="Dirigido a"
+                size="small"
+                sx={{ ...campo, flexGrow: 1, minWidth: 200 }}
+                disabled={deshabilitado}
+                error={Boolean(errors.destino)}
+                helperText={errors.destino?.message}
+                slotProps={{ inputLabel: { shrink: Boolean(field.value) } }}
+                {...field}
+              />
+            ) : (
             <TextField
               select
               label="Dirigido a"
