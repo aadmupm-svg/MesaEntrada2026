@@ -224,7 +224,7 @@ fojas: "1",
         />
 
         <TextField
-          label="Presentado por"
+          label={valores.tipo === "Salida" ? "Firmada por" : "Presentada por"}
           size="small"
           sx={{ ...campo, flexGrow: 1, minWidth: 200 }}
           disabled={deshabilitado}
