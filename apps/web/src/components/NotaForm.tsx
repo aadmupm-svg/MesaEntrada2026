@@ -19,7 +19,6 @@ const notaSchema = z.object({
   tipo: z.string().min(1, "Seleccione un tipo"),
   numero: z.string().min(1, "El número es obligatorio"),
   fojas: z.string(),
-  letra: z.string(),
   fecha: z.string().min(1, "La fecha es obligatoria"),
   horas: z.string().min(1, "La hora es obligatoria"),
   firmante: z.string().min(1, "El firmante es obligatorio"),
@@ -75,7 +74,6 @@ export function NotaForm({
       tipo: "Entrada",
       numero: proximoNumero,
       fojas: "1",
-      letra: "",
       fecha: hoy,
       horas: horaActual,
       firmante: "",
@@ -96,7 +94,6 @@ export function NotaForm({
         tipo: nota.tipo,
         numero: nota.numero,
         fojas: nota.fojas.replace(/^0|\.$/g, ""),
-        letra: nota.letra,
         fecha: nota.fecha,
         horas: nota.hora,
         firmante: nota.firmante,
@@ -107,14 +104,13 @@ export function NotaForm({
       reset({
         tipo: "Entrada",
         numero: proximoNumero,
-        fojas: "1",
-        letra: "",
-        fecha: hoy,
-        horas: horaActual,
-        firmante: "",
-        destino: "Intendencia",
-        extracto: "",
-      });
+fojas: "1",
+      fecha: hoy,
+      horas: horaActual,
+      firmante: "",
+      destino: "Intendencia",
+      extracto: "",
+    });
     }
   }, [nota, hoy, horaActual]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -129,7 +125,6 @@ export function NotaForm({
       tipo: values.tipo,
       numero: values.numero.trim().padStart(3, "0"),
       fojas: values.fojas ? `0${values.fojas}.` : "-.",
-      letra: values.letra.toUpperCase(),
       fecha: values.fecha,
       hora: values.horas,
       firmante: capitalizar(values.firmante),
@@ -193,20 +188,6 @@ export function NotaForm({
           helperText={errors.fojas?.message}
           slotProps={labelShrink("fojas")}
           {...register("fojas")}
-        />
-
-        <TextField
-          label="Letra"
-          size="small"
-          sx={{ ...campo, width: 90 }}
-          disabled={deshabilitado}
-          error={Boolean(errors.letra)}
-          helperText={errors.letra?.message}
-          slotProps={labelShrink("letra")}
-          {...register("letra")}
-          onChange={(e) => {
-            setValue("letra", e.target.value.toUpperCase());
-          }}
         />
 
         <Controller

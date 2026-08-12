@@ -36,7 +36,6 @@ import dayjs from "dayjs";
 interface Filtros {
   numero: string;
   tipo: string;
-  letra: string;
   fecha: string;
   destino: string;
   anio: string;
@@ -47,7 +46,6 @@ interface Filtros {
 const filtrosVacios: Filtros = {
   numero: "",
   tipo: "",
-  letra: "",
   fecha: "",
   destino: "",
   anio: "",
@@ -132,7 +130,6 @@ export function Home() {
       if (f.destino && n.para !== f.destino) return false;
       if (f.anio && String(n.anio) !== f.anio) return false;
       if (norm(f.numero) && !norm(n.numero).includes(norm(f.numero))) return false;
-      if (norm(f.letra) && !norm(n.letra).includes(norm(f.letra))) return false;
       if (norm(f.fecha) && !norm(n.fecha).includes(norm(f.fecha))) return false;
       if (norm(f.firmante) && !norm(n.firmante).includes(norm(f.firmante))) return false;
       if (norm(f.extracto) && !norm(n.extracto).includes(norm(f.extracto))) return false;
@@ -373,13 +370,6 @@ export function Home() {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            label="Letra"
-            size="small"
-            value={filtros.letra}
-            onChange={setFiltro("letra")}
-            sx={{ bgcolor: "campo", width: 90 }}
-          />
           <DatePicker
             label="Fecha"
             slotProps={{

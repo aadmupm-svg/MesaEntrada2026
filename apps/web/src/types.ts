@@ -4,7 +4,6 @@ export interface Nota {
   numero: string;
   anio: number;
   fojas: string;
-  letra: string;
   fecha: string;
   hora: string;
   firmante: string;

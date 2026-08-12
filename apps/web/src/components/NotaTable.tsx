@@ -18,7 +18,6 @@ const encabezados = [
   "Tipo",
   "Nº Nota",
   "Año",
-  "Letra",
   "Fojas",
   "Fecha",
   "Hora",
@@ -89,7 +88,6 @@ export function NotaTable({ notas, onEditar, onEliminar }: NotaTableProps) {
               <TableCell align="center" sx={numStyle}>
                 {nota.anio}
               </TableCell>
-              <TableCell align="center">{nota.letra}</TableCell>
               <TableCell align="center" sx={numStyle}>
                 {nota.fojas}
               </TableCell>
