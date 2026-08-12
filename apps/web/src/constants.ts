@@ -9,6 +9,10 @@ export const destinos = [
   { id: 8, nombre: "Rentas" },
   { id: 9, nombre: "Tierras" },
   { id: 10, nombre: "Delegaciones" },
+  { id: 11, nombre: "Licencia" },
+  { id: 12, nombre: "Niñez" },
+  { id: 13, nombre: "Tercera Edad" },
+  { id: 14, nombre: "Poder Legislativo" },
 ] as const;
 
 export const tipos = [
