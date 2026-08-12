@@ -61,6 +61,7 @@ export function Home() {
 
   const [notaEdicion, setNotaEdicion] = useState<Nota | null>(null);
   const [formActivo, setFormActivo] = useState(false);
+  const [nuevaNotaVersion, setNuevaNotaVersion] = useState(0);
   const [filtros, setFiltros] = useState<Filtros>(filtrosVacios);
   const [filtrosDeb, setFiltrosDeb] = useState<Filtros>(filtrosVacios);
   const [fechaPdf, setFechaPdf] = useState("");
@@ -209,6 +210,7 @@ export function Home() {
       invalidarNotas();
       setNotaEdicion(null);
       setFormActivo(false);
+      setNuevaNotaVersion((v) => v + 1);
       if (numeroAjustado) {
         toastOk(
           `El número ya estaba en uso; la nota se guardó con el número ${numeroAjustado}.`
@@ -250,6 +252,7 @@ export function Home() {
   const handleNuevaNota = async () => {
     setNotaEdicion(null);
     setFormActivo(true);
+    setNuevaNotaVersion((v) => v + 1);
     await refetchFecha();
     queryClient.refetchQueries({ queryKey: ["proximo-numero"] });
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -321,6 +324,7 @@ export function Home() {
 
       <Container maxWidth="xl">
         <NotaForm
+          key={notaEdicion ? `edit-${notaEdicion.id}` : `nueva-${nuevaNotaVersion}`}
           nota={notaEdicion}
           proximoNumero={proximoNumero}
           hoy={fechaAutoritativa?.fecha ?? ""}
