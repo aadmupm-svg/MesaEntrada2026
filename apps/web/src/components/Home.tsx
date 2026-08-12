@@ -391,6 +391,15 @@ export function Home() {
             }
             format="DD/MM/YYYY"
           />
+          {filtros.tipo === "Salida" ? (
+            <TextField
+              label="Destino"
+              size="small"
+              value={filtros.destino}
+              onChange={setFiltro("destino")}
+              sx={{ bgcolor: "campo", minWidth: 150 }}
+            />
+          ) : (
           <TextField
             select
             label="Destino"
@@ -406,6 +415,7 @@ export function Home() {
               </MenuItem>
             ))}
           </TextField>
+          )}
           <TextField
             select
             label="Año"
