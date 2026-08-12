@@ -14,6 +14,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
@@ -31,6 +32,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { crearUsuario, actualizarUsuario, eliminarUsuario, getUsuarios } from "../api/usuarios";
 import useAuth from "../auth/useAuth";
 import type { Usuario } from "../types";
@@ -58,6 +61,7 @@ export function Usuarios() {
     abierto: false,
     editando: null,
   });
+  const [verPass, setVerPass] = useState(false);
 
   const { data: usuarios, isLoading } = useQuery({
     queryKey: ["usuarios"],
@@ -237,10 +241,25 @@ export function Usuarios() {
               margin="normal"
               fullWidth
               label={dialogo.editando ? "Nueva contraseña (vacío = no cambiar)" : "Contraseña"}
-              type="password"
+              type={verPass ? "text" : "password"}
               required={!dialogo.editando}
               error={Boolean(errors.pass)}
               helperText={errors.pass?.message}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={verPass ? "Ocultar contraseña" : "Mostrar contraseña"}
+                        onClick={() => setVerPass((v) => !v)}
+                        edge="end"
+                      >
+                        {verPass ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
               {...register("pass")}
             />
             <Controller
