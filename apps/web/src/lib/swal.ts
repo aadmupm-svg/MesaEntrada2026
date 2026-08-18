@@ -10,7 +10,7 @@ const base = () => {
   const oscuro = esOscuro();
 
   return {
-    backgroundColor: oscuro ? "#1e1e1e" : "#ffffff",
+    background: oscuro ? "#1e1e1e" : "#ffffff",
     color: oscuro ? "#e3e3e3" : "#333333",
     iconColor: oscuro ? "#7fbfb5" : "#377D71",
     confirmButtonColor: oscuro ? "#7fbfb5" : "#377D71",
