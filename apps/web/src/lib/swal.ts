@@ -14,7 +14,6 @@ const base = () => {
     color: oscuro ? "#e3e3e3" : "#333333",
     iconColor: oscuro ? "#7fbfb5" : "#377D71",
     confirmButtonColor: oscuro ? "#7fbfb5" : "#377D71",
-    borderRadius: "16px",
     padding: "1.8rem",
     showClass: { popup: "swal2-show" },
     hideClass: { popup: "swal2-hide" },

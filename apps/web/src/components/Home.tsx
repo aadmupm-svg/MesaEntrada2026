@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { confirmarEliminar, toastError, toastOk } from "../lib/swal";
+import { confirmarEliminar, toastError, toastInfo, toastOk } from "../lib/swal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -270,8 +270,16 @@ export function Home() {
   };
 
   const handleImprimir = async () => {
+    const fecha = fechaPdf || fechaAutoritativa?.fecha || dayjs().format("DD/MM/YYYY");
+    const notasDia = notas.filter((nota) => nota.fecha === fecha);
+
+    if (notasDia.length === 0) {
+      toastInfo(`No hay movimientos para imprimir el día ${fecha}.`);
+      return;
+    }
+
     const { imprimirPlanilla } = await import("./pdf/PrintTable");
-    imprimirPlanilla(notas, fechaPdf, fechaAutoritativa?.fecha ?? dayjs().format("DD/MM/YYYY"));
+    imprimirPlanilla(notas, fecha, fechaAutoritativa?.fecha ?? dayjs().format("DD/MM/YYYY"));
   };
 
   return (
